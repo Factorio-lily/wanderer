@@ -1,0 +1,12 @@
+{
+    "name": "wanderer",
+    "version": "0.0.1",
+    "title": "○🌐Wanderer and Companion",
+    "author": "MsBinaryLily",
+    "factorio_version": "2.0",
+    "dependencies": ["base >= 2.0.28",
+      "space-age",
+      "PlanetsLib",
+    "Cold-biters"],
+    "description": "○🌐Discover a new planet in the depth of space, where the Sun does not shine. Unravel it's mysteries (how life could even survive here), exploit it's unique conditions and resources and as always. The Factory must Grow"
+  }
