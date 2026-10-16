@@ -10,3 +10,4 @@ end
 for _, value in ipairs(remove) do
     setting.allowed_values[_] = nil
 end
+setting.default_value = "nauvis"

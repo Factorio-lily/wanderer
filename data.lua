@@ -2,11 +2,16 @@
 local asteroid_util = require("__space-age__.prototypes.planet.asteroid-spawn-definitions")
 require("prototypes.planets.wanderer")
 
+require("prototypes.planets.companion-mapgen")
+require("prototypes.planets.companion-tiles")
+
+
 data.extend({
 {
     type = "surface-property",
     name = "cosmic-shielding",
     default_value = 0.0,
+
     order = "j[cs]",
 }})
 
@@ -14,7 +19,7 @@ data.extend({
 local meld = require("meld")
 
 --START MAP GEN
-function MapGen_Wanderer()
+local function MapGen_Wanderer()
     local map_gen_setting = table.deepcopy(data.raw.planet.aquilo.map_gen_settings) or {}
     meld.meld(map_gen_setting.property_expression_names,
     {
@@ -127,18 +132,24 @@ function MapGen_Wanderer()
 end
 
 
-function MapGen_Companion()
+local function MapGen_Companion()
     local map_gen_setting = table.deepcopy(data.raw.planet.aquilo.map_gen_settings) or {}
-    
+    map_gen_setting.autoplace_controls = {}
 
     local tiles = map_gen_setting.autoplace_settings["tile"]
     tiles.settings["ammoniacal-ocean"] = nil
     tiles.settings["ammoniacal-ocean-2"] = nil
     tiles.settings["brash-ice"] = nil
-    tiles.settings["ice_rough"] = nil
-    tiles.settings["ice_smooth"] = nil
+    tiles.settings["ice-rough"] = nil
+    tiles.settings["ice-smooth"] = nil
+    tiles.settings["companion-empty-space"] = {}
+    tiles.settings["companion-artificial"] = {}
 
-
+    local entities = map_gen_setting.autoplace_settings["entity"]
+    entities.settings["crude-oil"] = nil
+    entities.settings["offshore-oil"] = nil
+    entities.settings["lithium-brine"] = nil
+    entities.settings["fluorine-vent"] = nil
     return map_gen_setting
 end
 
@@ -258,6 +269,10 @@ local companion =
         search_radius = 30.0,
     })
 }
+
+if data.raw["surface-property"]["oxygen"] then
+    companion.surface_properties["oxygen"] = 0
+end
 
 companion.orbit = {
     parent = {
